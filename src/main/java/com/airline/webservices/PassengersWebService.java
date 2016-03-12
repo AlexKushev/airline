@@ -11,10 +11,8 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
 
 import com.airline.models.Passenger;
 import com.airline.service.PassengerService;
@@ -29,9 +27,6 @@ public class PassengersWebService {
 
 	@EJB
 	private PassengerService ps;
-
-	@Context
-	private UriInfo uriInfo;
 
 	public PassengersWebService() {
 

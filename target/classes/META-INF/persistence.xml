@@ -4,7 +4,9 @@
              xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
     <persistence-unit name="airline">
     <description>Container Persistence Unit</description>
-    <jta-data-source>cinemaDatabase</jta-data-source>
+    <jta-data-source>airlineDatabase</jta-data-source>
+    <class>com.airline.models.Passenger</class>
+    <class>com.airline.models.Flight</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
         <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)" />
