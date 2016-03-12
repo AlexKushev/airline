@@ -19,7 +19,7 @@ import javax.ws.rs.core.UriInfo;
 import com.airline.models.Passenger;
 import com.airline.service.PassengerService;
 
-@Path("/passengers")
+@Path("/passenger")
 public class PassengersWebService {
 
 	private static final Response RESPONSE_OK = Response.ok().build();

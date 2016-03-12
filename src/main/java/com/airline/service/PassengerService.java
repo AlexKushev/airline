@@ -41,12 +41,13 @@ public class PassengerService {
 		TypedQuery<Passenger> pQuery = em.createNamedQuery("Passenger.getByEmailAndPassword", Passenger.class);
 		pQuery.setParameter("email", email);
 		pQuery.setParameter("password", password);
-		Passenger passenger = pQuery.getSingleResult();
-
-		if (passenger != null) {
-			return true;
+		try {
+			Passenger passenger = pQuery.getSingleResult();
+		} catch (Exception e) {
+			return false;
 		}
-		return false;
+
+		return true;
 	}
 
 }
