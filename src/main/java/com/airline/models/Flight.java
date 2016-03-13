@@ -22,7 +22,8 @@ import com.airline.enums.FlightDestination;
  *
  */
 @Entity
-@NamedQueries({ @NamedQuery(name = "Flight.getAll", query = "SELECT f FROM Flight f") })
+@NamedQueries({ @NamedQuery(name = "Flight.getAll", query = "SELECT f FROM Flight f"), })
+@NamedQuery(name="Flight.getByDestination", query = "SELECT f FROM Flight f WHERE f.destinationFrom=:destinationFrom AND f.destinationTo=:destinationTo")
 public class Flight implements Serializable {
 
 	@Transient

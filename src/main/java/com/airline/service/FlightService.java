@@ -40,4 +40,12 @@ public class FlightService {
 
 	}
 
+	public Flight getAllFlightByDestination() {
+
+		TypedQuery<Flight> fQuery = em.createNamedQuery("Flight.getByDestination", Flight.class);
+		Flight flight = fQuery.getSingleResult();
+
+		return flight;
+	}
+
 }
