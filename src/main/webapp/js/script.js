@@ -25,6 +25,15 @@ function callForLogin() {
 			200 : function() {
 				alert("You logged in!");
 				window.location.replace("home.html");
+				
+				var currentPassenger = null;
+				
+				$.getJSON('rest/passenger/current', function(data) {
+					console.log(data.firstName);
+					currentPassenger = data.firstName;
+					alert(data.firstName);
+				});
+				
 			}
 		}
 	});

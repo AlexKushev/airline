@@ -4,6 +4,7 @@ import java.net.HttpURLConnection;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.airline.models.Passenger;
+import com.airline.service.PassengerContextService;
 import com.airline.service.PassengerService;
 
 @Path("/passenger")
@@ -27,6 +29,9 @@ public class PassengersWebService {
 
 	@EJB
 	private PassengerService ps;
+
+	@Inject
+	private PassengerContextService context;
 
 	public PassengersWebService() {
 
@@ -46,12 +51,24 @@ public class PassengersWebService {
 	@POST
 	@Consumes("application/json")
 	public Response loginPassenger(Passenger passenger) {
-		boolean isPassengerValid = ps.checkUserLoginInformation(passenger.getEmail(), passenger.getPassword());
-		if (!isPassengerValid) {
+		Passenger checkedPassenger = ps.checkUserLoginInformation(passenger.getEmail(), passenger.getPassword());
+		if (checkedPassenger == null) {
 			return Response.status(HttpURLConnection.HTTP_UNAUTHORIZED).build();
 		}
 
+		context.setCurrentPassenger(checkedPassenger);
 		return RESPONSE_OK;
+	}
+
+	@Path("/current")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public Passenger getUser() {
+		if (context.getCurrentPassenger() == null) {
+			return null;
+		}
+
+		return context.getCurrentPassenger();
 	}
 
 }

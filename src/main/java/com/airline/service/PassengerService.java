@@ -36,18 +36,19 @@ public class PassengerService {
 
 	}
 
-	public boolean checkUserLoginInformation(String email, String password) {
+	public Passenger checkUserLoginInformation(String email, String password) {
 
 		TypedQuery<Passenger> pQuery = em.createNamedQuery("Passenger.getByEmailAndPassword", Passenger.class);
 		pQuery.setParameter("email", email);
 		pQuery.setParameter("password", password);
+		Passenger passenger;
 		try {
-			Passenger passenger = pQuery.getSingleResult();
+			passenger = pQuery.getSingleResult();
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 
-		return true;
+		return passenger;
 	}
 
 }
