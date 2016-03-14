@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 
 import com.airline.enums.FlightDestination;
 import com.airline.enums.Gender;
+import com.airline.models.Airplane;
 import com.airline.models.Flight;
 import com.airline.models.Passenger;
 import com.airline.service.FlightService;
@@ -22,7 +23,7 @@ public class DatabaseUtils {
 
 	@EJB
 	private PassengerService ps;
-	
+
 	@EJB
 	private FlightService fs;
 
@@ -31,8 +32,10 @@ public class DatabaseUtils {
 			new Passenger("Ivan", "Ivanov", new Date(), Gender.Male, "ivanov@abv.bg", "123") };
 
 	private static Flight[] FLIGHTS = {
-			new Flight(FlightDestination.BARCELONA, FlightDestination.SOFIA, 300, new Date()),
-			new Flight(FlightDestination.BERLIN, FlightDestination.ROME, 235, new Date()) };
+			new Flight(FlightDestination.BARCELONA, FlightDestination.SOFIA, 300, new Date(),
+					new Airplane("Boeing 747", 320)),
+			new Flight(FlightDestination.BERLIN, FlightDestination.ROME, 235, new Date(),
+					new Airplane("Boeing 747", 400)) };
 
 	public void addTestDataToDB() {
 		deleteData();

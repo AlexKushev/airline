@@ -3,14 +3,17 @@ package com.airline.models;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
@@ -23,7 +26,7 @@ import com.airline.enums.FlightDestination;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "Flight.getAll", query = "SELECT f FROM Flight f"), })
-@NamedQuery(name="Flight.getByDestination", query = "SELECT f FROM Flight f WHERE f.destinationFrom=:destinationFrom AND f.destinationTo=:destinationTo")
+@NamedQuery(name = "Flight.getByDestination", query = "SELECT f FROM Flight f WHERE f.destinationFrom=:destinationFrom AND f.destinationTo=:destinationTo")
 public class Flight implements Serializable {
 
 	@Transient
@@ -31,6 +34,16 @@ public class Flight implements Serializable {
 
 	public Flight() {
 		super();
+	}
+
+	public Flight(FlightDestination destinationFrom, FlightDestination destinationTo, Integer flightPrice, Date date,
+			Airplane airplaneDetail) {
+		super();
+		this.destinationFrom = destinationFrom;
+		this.destinationTo = destinationTo;
+		this.flightPrice = flightPrice;
+		this.date = date;
+		this.airplaneDetail = airplaneDetail;
 	}
 
 	public Flight(FlightDestination destinationFrom, FlightDestination destinationTo, Integer flightPrice, Date date) {
@@ -55,6 +68,10 @@ public class Flight implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date date;
+
+	@OneToOne(cascade = { CascadeType.PERSIST, CascadeType.REMOVE })
+	@JoinColumn(name = "airplane_fk")
+	private Airplane airplaneDetail;
 
 	public Integer getId() {
 		return id;
@@ -96,10 +113,18 @@ public class Flight implements Serializable {
 		this.date = date;
 	}
 
+	public Airplane getAirplaneDetail() {
+		return airplaneDetail;
+	}
+
+	public void setAirplaneDetail(Airplane airplaneDetail) {
+		this.airplaneDetail = airplaneDetail;
+	}
+
 	@Override
 	public String toString() {
 		return "Flight [id=" + id + ", destinationFrom=" + destinationFrom + ", destinationTo=" + destinationTo
-				+ ", flightPrice=" + flightPrice + ", date=" + date + "]";
+				+ ", flightPrice=" + flightPrice + ", date=" + date + ", airplaneDetail=" + airplaneDetail + "]";
 	}
 
 }

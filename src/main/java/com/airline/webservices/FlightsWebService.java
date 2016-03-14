@@ -30,7 +30,6 @@ public class FlightsWebService {
 	public List<Flight> getFlights() {
 
 		List<Flight> fList = fs.getAllFlights();
-
 		return fList;
 
 	}
