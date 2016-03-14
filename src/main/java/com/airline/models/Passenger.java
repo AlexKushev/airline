@@ -23,6 +23,7 @@ import com.airline.enums.Gender;
  */
 @Entity
 @NamedQueries({ @NamedQuery(name = "Passenger.getAll", query = "SELECT p FROM Passenger p"),
+		@NamedQuery(name = "Passenger.findByEmail", query = "SELECT p FROM Passenger p WHERE p.email=:email"),
 		@NamedQuery(name = "Passenger.getByEmailAndPassword", query = "SELECT p FROM Passenger p WHERE p.email=:email AND p.password=:password") })
 public class Passenger implements Serializable {
 

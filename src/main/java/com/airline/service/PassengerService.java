@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
@@ -23,8 +24,18 @@ public class PassengerService {
 	public PassengerService() {
 	}
 
-	public void addNewPassenger(Passenger passenger) {
-		em.persist(passenger);
+	public boolean addNewPassenger(Passenger passenger) {
+		String passengerEmail = passenger.getEmail();
+		boolean isOk = false;
+		try {
+			em.createNamedQuery("Passenger.findByEmail", Passenger.class)
+							.setParameter("email", passengerEmail).getSingleResult();
+		} catch (NoResultException ex){
+			em.persist(passenger);
+			isOk = true;
+		}
+		
+		return isOk;
 	}
 
 	public List<Passenger> getAllPassenger() {

@@ -71,4 +71,16 @@ public class PassengersWebService {
 		return context.getCurrentPassenger();
 	}
 
+	@Path("/register")
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addPassenger(Passenger newPassenger) {
+
+		if (ps.addNewPassenger(newPassenger)) {
+			return RESPONSE_OK;
+		}
+
+		return Response.status(401).build();
+	}
+
 }
